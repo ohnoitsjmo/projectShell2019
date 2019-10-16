@@ -4,6 +4,7 @@
     <span class="todo-title">
       {{ todo.title }}
     </span>
+    <input v-on:click="onDelete()" type="submit" class="button is-link" value="Delete"/>
   </div>
 </template>
 
@@ -16,6 +17,13 @@ export default {
       default: () => {
         return {};
       }
+    }
+  },
+  methods: {
+    onDelete () {
+      this.$store.dispatch('removeToDo', this.todo.id).then(() => {
+        console.log(this.todo.id);
+      });
     }
   }
 };
