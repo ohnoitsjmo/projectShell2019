@@ -18,7 +18,7 @@
           <tbody>
               <td>
                 <tr v-for="todo in todos">
-                  <div v-if="todo.category == 'Groceries'">
+                  <div v-if="todo.category == 'Groceries' || todo.category == 'groceries'">
                     <br>
                     <ToDo :key="todo.id" :todo="todo" />
                   </div>
@@ -26,7 +26,7 @@
               </td>
               <td>
                 <tr v-for="todo in todos">
-                  <div v-if="todo.category == 'Shopping'">
+                  <div v-if="todo.category == 'Shopping' || todo.category == 'shopping'">
                     <br>
                     <ToDo :key="todo.id" :todo="todo" />
                   </div>
@@ -44,7 +44,11 @@
             <b-input v-model="newTodo.title" />
           </b-field>
           <b-field label="Category">
-            <b-input v-model="newTodo.category" />
+            <select v-model="newTodo.category">
+              <option disabled value="">Please select category</option>
+              <option>Groceries</option>
+              <option>Shopping</option>
+            </select>
           </b-field>
           <b-field>
             <div class="control is-block">
