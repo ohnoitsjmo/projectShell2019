@@ -5,11 +5,35 @@
         <h5 class="is-5 title">My ToDos</h5>
       </div>
     </div>
-    <div class="columns is-centered">
-      <div class="column is-half">
-        <template v-for="todo in todos">
-          <ToDo :key="todo.id" :todo="todo" />
-        </template>
+
+  <div class="columns is-centered">
+    <div class="column is-half">
+      <table class="table">
+          <thead>
+              <tr>
+                  <th>Groceries</th>
+                  <th>Shopping</th>
+              </tr>
+          </thead>
+          <tbody>
+              <td>
+                <tr v-for="todo in todos">
+                  <div v-if="todo.category == 'Groceries'">
+                    <br>
+                    <ToDo :key="todo.id" :todo="todo" />
+                  </div>
+                </tr>
+              </td>
+              <td>
+                <tr v-for="todo in todos">
+                  <div v-if="todo.category == 'Shopping'">
+                    <br>
+                    <ToDo :key="todo.id" :todo="todo" />
+                  </div>
+                </tr>
+              </td>
+          </tbody>
+        </table>
       </div>
     </div>
     <section class="newTodo columns is-centered">
@@ -18,6 +42,9 @@
         <form v-on:submit.prevent="onSubmit">
           <b-field label="Title">
             <b-input v-model="newTodo.title" />
+          </b-field>
+          <b-field label="Category">
+            <b-input v-model="newTodo.category" />
           </b-field>
           <b-field>
             <div class="control is-block">
@@ -37,7 +64,8 @@ export default {
   data: function() {
     return {
       newTodo: {
-        title: null
+        title: null,
+        category: null
       }
     };
   },
@@ -53,6 +81,7 @@ export default {
     onSubmit() {
       this.$store.dispatch("addToDo", this.newTodo).then(() => {
         this.newTodo.title = null;
+        this.newTodo.category = null;
       });
     }
   },
@@ -60,7 +89,7 @@ export default {
     this.$store.dispatch("loadToDos").catch(() => {
       // if we are not logged in redirect home
       this.$router.push("/");
-    })
+    });
   }
 };
 </script>
