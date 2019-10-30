@@ -3,6 +3,7 @@ import {
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import User from './user';
 
@@ -17,7 +18,7 @@ export default class ToDo {
   @Column({ type: 'varchar' })
   title
 
-  @Column({ type: 'varchar' })
+  @ManyToOne(() => Category, (category) => category.todos)
   category
 
   @ManyToOne(() => User, (user) => user.todos)
