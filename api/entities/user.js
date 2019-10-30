@@ -6,6 +6,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import ToDo from './todo';
+import Category from './category';
 
 @Entity()
 export default class User {

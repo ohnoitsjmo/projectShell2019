@@ -2,10 +2,10 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  ManyToOne,
-  OneToMany,
+  ManyToOne
 } from 'typeorm';
 import User from './user';
+import Category from './category';
 
 @Entity()
 export default class ToDo {

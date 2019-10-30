@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import {
     Entity,
     Column,
@@ -6,6 +7,7 @@ import {
     ManyToOne
   } from 'typeorm';
   import ToDo from './todo';
+  import User from './user';
   
   @Entity()
   export default class Category {
