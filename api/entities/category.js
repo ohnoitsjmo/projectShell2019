@@ -1,26 +1,20 @@
 /* eslint-disable import/no-cycle */
 import {
-    Entity,
-    Column,
-    PrimaryGeneratedColumn,
-    OneToMany,
-    ManyToOne
-  } from 'typeorm';
-  import ToDo from './todo';
-  import User from './user';
-  
-  @Entity()
-  export default class Category {
-    @PrimaryGeneratedColumn()
-    id
-  
-    @Column({ type: 'varchar' })
-    name
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+} from 'typeorm';
+import User from './user';
 
-    @OneToMany(() => ToDo, (todo) => todo.category,{eagers:true})
-    todos
+@Entity()
+export default class Category {
+  @PrimaryGeneratedColumn()
+  id
 
-    @ManyToOne(() => User, (user) => user.todos)
-    user
-  }
-  
+  @Column({ type: 'varchar'})
+  name
+
+  @ManyToOne(() => User, (user) => user.categories)
+  user
+}

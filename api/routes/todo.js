@@ -7,14 +7,12 @@ const router = Router();
 router.route('/todos')
   .all(isAuthenticated)
   .get((req, res) => {
-    getRepository(ToDo).find({ where: { userId: req.user.id } }).then((todos) => {
-      res.send(todos);
-    });
+    res.send(req.user.todos);
   })
   .post((req, res) => {
-    const { done, title, category } = req.body;
+    const { done, title, category} = req.body;
     const manager = getManager();
-    const todo = manager.create(ToDo, { done, title, category});
+    const todo = manager.create(ToDo, { done, title, category });
     todo.user = req.user;
     manager.save(todo).then((savedTodo) => {
       res.send(savedTodo);

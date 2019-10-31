@@ -5,35 +5,11 @@
         <h5 class="is-5 title">My ToDos</h5>
       </div>
     </div>
-
-  <div class="columns is-centered">
-    <div class="column is-half">
-      <table class="table">
-          <thead>
-              <tr>
-                  <th>Groceries</th>
-                  <th>Shopping</th>
-              </tr>
-          </thead>
-          <tbody>
-              <td>
-                <tr v-for="todo in todos">
-                  <div v-if="todo.category == 'Groceries' || todo.category == 'groceries'">
-                    <br>
-                    <ToDo :key="todo.id" :todo="todo" />
-                  </div>
-                </tr>
-              </td>
-              <td>
-                <tr v-for="todo in todos">
-                  <div v-if="todo.category == 'Shopping' || todo.category == 'shopping'">
-                    <br>
-                    <ToDo :key="todo.id" :todo="todo" />
-                  </div>
-                </tr>
-              </td>
-          </tbody>
-        </table>
+    <div class="columns is-centered">
+      <div class="column is-half">
+        <template v-for="todo in todos">
+          <ToDo :key="todo.id" :todo="todo"/>
+        </template>
       </div>
     </div>
     <section class="newTodo columns is-centered">
@@ -43,11 +19,10 @@
           <b-field label="Title">
             <b-input v-model="newTodo.title" />
           </b-field>
-          <b-field label="Category">
-            <select v-model="newTodo.category">
-              <option disabled value="">Please select category</option>
-              <option>Groceries</option>
-              <option>Shopping</option>
+          <b-field>
+            <select id="cat-dropdown" text="Category" v-model="newTodo.category">
+              <option disabled value="-1">Category</option>
+              <option v-for="cat in cats" :key="cat.id" :value="cat.id">{{cat.name}}</option>
             </select>
           </b-field>
           <b-field>
@@ -76,6 +51,9 @@ export default {
   computed: {
     todos() {
       return this.$store.state.todos;
+    },
+    cats() {
+      return this.$store.state.categories;
     }
   },
   components: {
@@ -90,11 +68,13 @@ export default {
     }
   },
   mounted: function() {
+    this.$store.dispatch("loadCategories").catch(() => {
+      this.$router.push("/");
+    })
     this.$store.dispatch("loadToDos").catch(() => {
       // if we are not logged in redirect home
       this.$router.push("/");
-    });
+    })
   }
 };
 </script>
-<style lang="scss" scoped></style>
