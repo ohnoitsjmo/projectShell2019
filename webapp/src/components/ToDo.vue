@@ -2,7 +2,7 @@
   <div class="todo columns">
     <b-checkbox v-model="todo.done" v-on:input="handleCheck" />
     <span class="todo-title column">
-      <b>{{getCatName(todo.category)}}</b> - {{ todo.title }}
+      <b>{{getCategory(todo.category)}}</b> - {{ todo.title }}
     </span>
     <b-button v-on:click="handleDelete">Delete</b-button>
   </div>
@@ -26,13 +26,17 @@ export default {
     handleDelete: function() {
       this.$store.dispatch("deleteTodo", this.todo);
     },
-    getCatName: function(catId) {
+    getCategory: function(id) {
       const matches = this.$store.state.categories.filter(function(category){
-        if(category.id == catId) {
+        if(category.id == id) {
           return category;
         }
        });
-       return (matches.length > 0) ? matches[0].name : "None";
+       if (matches.length > 0) {
+         return matches[0].name;
+       } else {
+         return;
+       }
     }
   }
 };
